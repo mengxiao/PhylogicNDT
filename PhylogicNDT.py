@@ -6,6 +6,7 @@
 
 import argparse
 import logging
+import numpy as np
 import os
 import sys
 
@@ -79,6 +80,11 @@ def build_parser():
                              action='store',
                              dest='tumor_size',
                              default=None)
+
+    base_parser.add_argument('--seed',
+                             type=int,
+                             default=42,
+                             help='seed for numpy random number generator')
 
     # different Tools of the PhylogicNDT Package
     subparsers = parser.add_subparsers(title="tool", description="Choose a tool to run", help='Try the Cluster tool')
@@ -383,4 +389,5 @@ def build_parser():
 # if __name__ == "main":
 parser = build_parser()
 args = parser
+np.random.seed(args.seed)
 args.func(args)
