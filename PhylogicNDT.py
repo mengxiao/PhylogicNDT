@@ -6,7 +6,9 @@
 
 import argparse
 import logging
+import numpy as np
 import os
+import random
 import sys
 
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/")
@@ -34,6 +36,11 @@ def build_parser():
 
     # global parameters common to most tools
     base_parser = argparse.ArgumentParser(add_help=False)
+
+    base_parser.add_argument('--seed',
+                             type=int,
+                             default=42,
+                             help='seed for numpy random number generator')
 
     # option for specifying individual/patient ID
     base_parser.add_argument('--indiv_id', '-i',
@@ -406,4 +413,6 @@ def build_parser():
 # if __name__ == "main":
 parser = build_parser()
 args = parser
+np.random.seed(args.seed)
+random.seed(args.seed)
 args.func(args)
